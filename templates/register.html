@@ -1,0 +1,11 @@
+<h1>
+{{name}}
+</h1>
+<form action="display" method="POST">
+    {% csrf_token %}
+    Team Name : <input type = "text" name="teamname"><br>
+    Team Number : <input type = "text" name="teamnum"><br>
+    Manager : <input type = "text" name="manger"><br>
+    coach : <input type = "text" name="coach"><br>
+    <input type = 'submit'>
+</form>
