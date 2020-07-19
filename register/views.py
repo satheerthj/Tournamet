@@ -1,19 +1,61 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import Registration 
+from .models import Registration ,Admin,Score
 import random
 import datetime
 import itertools
 # Create your views here.
 def home(request):
+    return render(request,'homepage.html',{'name':'TOURNAMENT REGISTRATION'})
+def login(request):
+    if request.method == 'GET':
+        return render(request,'admin.html')
+    else:
+        username= request.POST['username']
+        password = request.POST['password']
+        login = Admin.objects.all()
+        u = [i.username for i in login]
+        print (u)
+        p= [i.password for i in login]
+        if username in u:
+            if password in p:
+                return render(request,'adminpage.html')
+            else:
+                print('wrong password')
+              
+
+                return render(request,'admin.html',{'message': 'wrongpassword'})
+        else:
+            print ('wrong username')
+            return render(request,'admin.html',{'message': 'wrongUsername'})
+        
+def update(request):
+    if request.method == 'POSTs':
+        team = request.POST['name']
+        goals = request.POST['goals']
+        score = Score()
+        score.team = team
+        score.score = str(goals)
+        score.save()
+    return render(request,'adminpage.html')
+def register(request):
+    count = Registration.objects.all().count()
+    register = Registration()
+    teams = Registration.objects.all()
+    team_names = [data.team_name for data in teams]
+    if count ==10:
+        message = 'Registraion Full'
+        score= Score.objects.all()
+        t = [i.team for i in score]
+        s = [i.score for i in score]
+        print(t)
+        ts = zip(t,s)
+        return render(request , 'teams.html',{'message' : message,'team':ts})
     return render(request,'register.html',{'name':'TOURNAMENT REGISTRATION'})
 def display(request):
     if request.method == 'POST':
         register = Registration()
         count = Registration.objects.all().count()
-        if count ==10:
-            message = 'Registraion Full'
-            return render(request , 'teams.html',{'message' : message})
         teamname = request.POST['teamname']
         teamnum = int(request.POST['teamnum'])
         manager = request.POST['manger']
@@ -48,7 +90,6 @@ def match(request):
     x = len(match_pair)
     for i in range(0,x):      
         if len(a) > 0:
-           
             for j in list_copy:
                 b = False
                 for k in a:

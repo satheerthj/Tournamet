@@ -1,5 +1,10 @@
 <h1>   {{message}}</h1>
+ScoreBoard<br><br><br><br>
+{%for i,j in team%}
+Team:{{i}}<br>
+Score:{{j}} 
+{%endfor%}
 <form action="match">
-    Start Matchmaking
+    Start Matchmaking<br>
     <input type="submit">
 </form>
