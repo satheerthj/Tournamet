@@ -1,7 +1,24 @@
-<h1>MATCH SCHEDULE</h1>><br>
+<h1>MATCH SCHEDULE</h1><br>
+<style>
+    table, th,td {
+        border: 1px solid black;
+    }
+</style>
+
+<table style = "widows: 100px;">
+    <tr>
+        <th>Date</th>
+        <th>venue</th>
+        <th>match</th>
+       
+    </tr>
 {% for i,j,k,l ,m in final%}
-<h2>Day {{m}}</h2>><br>
-{{i}}<br><br>
-{{j}}<br><br>
-{{k}} vs {{l}}<br><br>
+<tr>
+
+<td>{{i}}</td>
+<td>{{j}}</td>
+<td>{{k}} vs {{l}}</td>
+</tr>
+
 {%endfor%}
+</table>
